@@ -48,3 +48,8 @@ internbridge/
 2. Abra o arquivo `index.html` diretamente em qualquer navegador moderno (Chrome, Edge, Firefox, Safari) ou utilize a extensão **Live Server** no VS Code.
 3. Clique na aba **Criar Conta**, preencha seus dados (ex.: curso, período e turno livre) e conclua o cadastro.
 4. Na aba **Entrar**, valide seu acesso com o e-mail e senha cadastrados para explorar as vagas recomendadas.
+
+## Demonstração Online
+
+Acesse a plataforma funcionando diretamente pelo navegador:
+[https://seu-usuario.github.io/internbridge/](https://seu-usuario.github.io/internbridge/)
