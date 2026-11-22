@@ -1,0 +1,35 @@
+# InternBridge — Plataforma de Estágios Compatíveis
+
+O **InternBridge** é uma aplicação web responsiva desenvolvida para conectar estudantes universitários (desde o 1º período até períodos avançados) a oportunidades de estágio compatíveis com seus horários de aula, oferecendo transparência de bolsa/requisitos, construtor de currículo acadêmico e acompanhamento de candidaturas.
+
+---
+
+## Funcionalidades Principais
+
+- **Splash Screen & Autenticação Real:**
+  - Tela inicial animada de apresentação (5 segundos) antes do acesso.
+  - Fluxo completo de **Cadastro → Login** com validação de credenciais via `localStorage` e opção para **mostrar/ocultar senha**.
+- **Tema Claro e Modo Escuro (Dark Mode):**
+  - Alternância instantânea entre tema claro (`☀️`) e escuro (`🌙`) na tela de acesso e na barra principal, salvando a preferência do usuário no navegador.
+  - Proteção automática na impressão (`@media print`) para que o currículo sempre seja impresso/exportado em PDF com fundo branco e alto contraste.
+- **Exploração Inteligente de Vagas:**
+  - Filtros combinados por **Turno Livre** (Manhã, Tarde, Noite), **Área/Curso** (Tecnologia, Administração, Contabilidade, Engenharia/Arquitetura, Comunicação/Design, Educação, Saúde e Direito) e **Nível/Período** (Sem experiência para 1ºs períodos ou períodos avançados com experiência prática).
+  - Recomendação automática com selo **★ Compatível com seu perfil** cruzando o curso, período e turno informados pelo estudante.
+  - Modal detalhado separando **Requisitos Obrigatórios** de **Diferenciais (Não Eliminatórios)** e candidatura em 1 clique.
+- **Construtor de Currículo Acadêmico:**
+  - Pré-preenchimento automático dos dados cadastrais (nome, curso/período, turno livre e contato).
+  - Campos dedicados para o estudante descrever seus próprios **projetos acadêmicos, experiências práticas e habilidades**, com pré-visualização em tempo real e exportação para PDF/impressão.
+- **Acompanhamento de Candidaturas:**
+  - Painel individual por usuário exibindo o status visual de cada vaga enviada (`1. Enviado` → `2. Currículo Visto` → `3. Entrevista`).
+
+---
+
+## Estrutura de Arquivos
+
+```text
+internbridge/
+├── index.html      # Estrutura semântica, telas de autenticação, modal e seções do app
+├── styles.css      # Estilização responsiva (Mobile-First), animações e variáveis de tema
+├── app.js          # Lógica de autenticação, filtros, recomendação, currículo e localStorage
+├── favicon.svg     # Ícone vetorial da marca para a aba do navegador
+└── README.md       # Documentação do projeto

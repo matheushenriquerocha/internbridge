@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="InternBridge — Plataforma de estágios compatíveis com o horário das suas aulas e apoio ao primeiro currículo." />
+  <title>InternBridge | Acesso e Estágios Compatíveis</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
+
+  <!-- Lista de sugestões de cursos para Cadastro e Currículo -->
+  <datalist id="lista-cursos-sugeridos">
+    <option value="Sistemas de Informação - 1º Período"></option>
+    <option value="Ciência da Computação - 5º Período"></option>
+    <option value="Engenharia de Software - 6º Período"></option>
+    <option value="Administração - 2º Período"></option>
+    <option value="Ciências Contábeis - 5º Período"></option>
+    <option value="Engenharia Civil - 6º Período"></option>
+    <option value="Arquitetura e Urbanismo - 5º Período"></option>
+    <option value="Design Gráfico / UX - 4º Período"></option>
+    <option value="Publicidade e Marketing - 4º Período"></option>
+    <option value="Pedagogia - 2º Período"></option>
+    <option value="Enfermagem - 5º Período"></option>
+    <option value="Psicologia - 6º Período"></option>
+    <option value="Direito - 6º Período"></option>
+  </datalist>
+
+  <!-- ==================== TELA DE AUTENTICAÇÃO (SPLASH 5s + LOGIN / CADASTRO) ==================== -->
+  <section id="auth-screen" class="auth-screen" aria-labelledby="auth-heading">
+    <!-- Botão de Tema na Tela de Login -->
+    <button type="button" id="btn-theme-auth" class="theme-toggle floating-theme" aria-label="Alternar tema claro ou escuro">
+      <span class="theme-icon" aria-hidden="true">🌙</span>
+      <span class="theme-label">Escuro</span>
+    </button>
+
+    <!-- Formas decorativas animadas no fundo -->
+    <div class="auth-bg-shapes" aria-hidden="true">
+      <span class="shape shape-1"></span>
+      <span class="shape shape-2"></span>
+      <span class="shape shape-3"></span>
+    </div>
+
+    <!-- Splash Screen (Logo por 5 segundos) -->
+    <div id="splash-screen" class="splash-container" role="status" aria-label="Carregando InternBridge">
+      <div class="splash-logo-wrap">
+        <div class="splash-logo-icon" aria-hidden="true">
+          <svg width="54" height="54" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 42C10 28 21 18 32 18C43 18 54 28 54 42" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round"/>
+            <path d="M18 42C18 33 24 27 32 27C40 27 46 33 46 42" stroke="#93C5FD" stroke-width="4.5" stroke-linecap="round"/>
+            <circle cx="32" cy="43" r="5" fill="#34D399"/>
+          </svg>
+        </div>
+        <h1 class="splash-title">Intern<span>Bridge</span></h1>
+        <p class="splash-subtitle">Conectando estudantes ao estágio ideal</p>
+      </div>
+      <div class="splash-progress-track" aria-hidden="true">
+        <div class="splash-progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Card de Login / Cadastro -->
+    <div id="auth-card" class="auth-card hidden">
+      <div class="auth-brand">
+        <span class="brand-badge large" aria-hidden="true">IB</span>
+        <div>
+          <h2 id="auth-heading" class="auth-title">InternBridge</h2>
+          <p class="auth-tagline">Estágios compatíveis com suas aulas e período</p>
+        </div>
+      </div>
+
+      <!-- Alternador animado entre Login e Cadastro -->
+      <div class="auth-tabs" role="tablist" aria-label="Modo de acesso">
+        <div id="auth-tab-indicator" class="auth-tab-indicator"></div>
+        <button type="button" role="tab" id="tab-login" class="auth-tab active" aria-selected="true">Entrar</button>
+        <button type="button" role="tab" id="tab-register" class="auth-tab" aria-selected="false">Criar Conta</button>
+      </div>
+
+      <!-- Mensagem de sucesso após cadastro -->
+      <p id="auth-success" class="auth-success hidden" role="status"></p>
+
+      <!-- Formulário de Login -->
+      <form id="form-login" class="auth-form active" aria-label="Formulário de login">
+        <div class="form-field">
+          <label for="login-email">E-mail acadêmico ou pessoal</label>
+          <input type="email" id="login-email" required placeholder="seu.email@universidade.edu.br" autocomplete="email" />
+        </div>
+
+        <div class="form-field">
+          <label for="login-senha">Senha</label>
+          <div class="password-wrapper">
+            <input type="password" id="login-senha" required placeholder="••••••••" autocomplete="current-password" />
+            <button type="button" class="toggle-password" data-target="login-senha" aria-label="Mostrar senha" aria-pressed="false">
+              <svg class="icon-eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg class="icon-eye-closed hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <p id="login-erro" class="auth-error hidden" role="alert"></p>
+
+        <button type="submit" class="btn btn-primary btn-full btn-lg">
+          Validar e Entrar
+        </button>
+      </form>
+
+      <!-- Formulário de Cadastro -->
+      <form id="form-register" class="auth-form hidden" aria-label="Formulário de cadastro">
+        <div class="form-field">
+          <label for="reg-nome">Nome completo *</label>
+          <input type="text" id="reg-nome" required placeholder="Ex: Lucas Martins" autocomplete="name" />
+        </div>
+
+        <div class="form-field">
+          <label for="reg-email">E-mail *</label>
+          <input type="email" id="reg-email" required placeholder="seu.email@exemplo.com" autocomplete="email" />
+        </div>
+
+        <div class="form-field">
+          <label for="reg-telefone">Telefone / WhatsApp *</label>
+          <input type="tel" id="reg-telefone" required placeholder="(98) 99999-0000" autocomplete="tel" />
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-field">
+            <label for="reg-curso">Curso / Período *</label>
+            <input type="text" id="reg-curso" list="lista-cursos-sugeridos" required placeholder="Ex: Engenharia Civil - 5º Per." />
+          </div>
+
+          <div class="form-field">
+            <label for="reg-turno">Turno Livre *</label>
+            <select id="reg-turno" required>
+              <option value="Manhã">Manhã</option>
+              <option value="Tarde">Tarde</option>
+              <option value="Noite">Noite</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="reg-senha">Crie uma senha (mín. 4 caracteres) *</label>
+          <div class="password-wrapper">
+            <input type="password" id="reg-senha" minlength="4" required placeholder="••••" autocomplete="new-password" />
+            <button type="button" class="toggle-password" data-target="reg-senha" aria-label="Mostrar senha" aria-pressed="false">
+              <svg class="icon-eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg class="icon-eye-closed hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <p id="reg-erro" class="auth-error hidden" role="alert"></p>
+
+        <button type="submit" class="btn btn-primary btn-full btn-lg">
+          Concluir Cadastro
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==================== APLICAÇÃO PRINCIPAL (OCULTA ATÉ LOGIN) ==================== -->
+  <div id="app-shell" class="app-shell hidden">
+    <header class="topbar">
+      <div class="container topbar-content">
+        <div class="brand">
+          <span class="brand-badge" aria-hidden="true">IB</span>
+          <div>
+            <h1 class="brand-title">InternBridge</h1>
+            <p class="brand-subtitle" id="user-greeting">Olá, Estudante!</p>
+          </div>
+        </div>
+
+        <nav class="desktop-nav" aria-label="Navegação principal">
+          <button type="button" class="nav-btn active" data-tab="vagas" aria-current="page">Explorar Vagas</button>
+          <button type="button" class="nav-btn" data-tab="curriculo">1º Currículo</button>
+          <button type="button" class="nav-btn" data-tab="candidaturas">
+            Minhas Candidaturas <span id="badge-count" class="badge-count">0</span>
+          </button>
+          <button type="button" id="btn-theme-desktop" class="theme-toggle" aria-label="Alternar tema claro ou escuro">
+            <span class="theme-icon" aria-hidden="true">🌙</span>
+            <span class="theme-label">Escuro</span>
+          </button>
+          <button type="button" id="btn-logout-desktop" class="btn-logout" title="Sair da conta">Sair</button>
+        </nav>
+
+        <div class="mobile-actions">
+          <button type="button" id="btn-theme-mobile" class="theme-toggle icon-only" aria-label="Alternar tema claro ou escuro">
+            <span class="theme-icon" aria-hidden="true">🌙</span>
+          </button>
+          <button type="button" id="btn-logout-mobile" class="btn-logout" aria-label="Sair da conta">Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="conteudo-principal" class="container main-content">
+      <!-- SEÇÃO 1: EXPLORAR VAGAS -->
+      <section id="sec-vagas" class="tab-section active" aria-labelledby="titulo-vagas">
+        <div class="hero-box">
+          <h2 id="titulo-vagas">Encontre vagas compatíveis com suas aulas e período</h2>
+          <p>Oportunidades desde o 1º período até estágios avançados com experiência prática, bolsa clara e horário definido.</p>
+
+          <div class="filters-panel" role="search" aria-label="Filtrar vagas de estágio">
+            <div class="filter-group">
+              <span class="filter-label" id="lbl-turno">Qual turno você tem livre?</span>
+              <div class="chips-group" role="group" aria-labelledby="lbl-turno">
+                <button type="button" class="chip active" data-turno="todos">Todos</button>
+                <button type="button" class="chip" data-turno="Manhã">Manhã</button>
+                <button type="button" class="chip" data-turno="Tarde">Tarde</button>
+                <button type="button" class="chip" data-turno="Noite">Noite</button>
+              </div>
+            </div>
+
+            <div class="filter-row">
+              <div class="input-group">
+                <label for="filtro-curso">Área / Curso</label>
+                <select id="filtro-curso">
+                  <option value="todos">Todos os cursos</option>
+                  <option value="Tecnologia">Tecnologia / TI / Software</option>
+                  <option value="Administração">Administração / Negócios</option>
+                  <option value="Contabilidade">Contabilidade / Economia / Finanças</option>
+                  <option value="Engenharia">Engenharia / Arquitetura</option>
+                  <option value="Comunicação">Comunicação / Design / Marketing</option>
+                  <option value="Educação">Pedagogia / Educação</option>
+                  <option value="Saúde">Enfermagem / Psicologia / Saúde</option>
+                  <option value="Direito">Direito</option>
+                </select>
+              </div>
+
+              <div class="input-group">
+                <label for="filtro-nivel">Período / Experiência</label>
+                <select id="filtro-nivel">
+                  <option value="todos">Todos os níveis e períodos</option>
+                  <option value="iniciante">Sem experiência (1ºs períodos)</option>
+                  <option value="avancado">Períodos avançados / Com experiência</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-header">
+          <p id="contador-vagas" aria-live="polite">Carregando vagas...</p>
+        </div>
+
+        <div id="lista-vagas" class="vagas-grid"></div>
+
+        <div id="estado-vazio" class="empty-state hidden" role="status">
+          <h3>Nenhuma vaga encontrada para essa combinação</h3>
+          <p>Tente selecionar outro turno livre, área ou limpar os filtros aplicados.</p>
+          <button type="button" id="btn-limpar-filtros" class="btn btn-secondary">Limpar todos os filtros</button>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 2: GERADOR DE 1º CURRÍCULO -->
+      <section id="sec-curriculo" class="tab-section hidden" aria-labelledby="titulo-curriculo">
+        <div class="section-header">
+          <h2 id="titulo-curriculo">Construtor de Currículo Acadêmico</h2>
+          <p>Seus dados cadastrais já estão preenchidos. Adicione seus projetos, estágios anteriores e habilidades para gerar o currículo.</p>
+        </div>
+
+        <div class="curriculo-layout">
+          <form id="form-curriculo" class="card form-card">
+            <div class="form-field">
+              <label for="cv-nome">Nome completo *</label>
+              <input type="text" id="cv-nome" required placeholder="Ex: Lucas Martins" />
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="cv-curso">Curso e Período *</label>
+                <input type="text" id="cv-curso" list="lista-cursos-sugeridos" required placeholder="Ex: Sistemas de Informação - 5º Período" />
+              </div>
+              <div class="form-field">
+                <label for="cv-turno">Turno Livre para Estágio *</label>
+                <select id="cv-turno" required>
+                  <option value="Manhã (08h às 13h)">Manhã (08h às 13h)</option>
+                  <option value="Tarde (13h às 18h)">Tarde (13h às 18h)</option>
+                  <option value="Noite (18h às 22h)">Noite (18h às 22h)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="cv-contato">E-mail e Telefone / WhatsApp *</label>
+              <input type="text" id="cv-contato" required placeholder="Ex: lucas@email.com | (98) 99999-0000" />
+            </div>
+
+            <div class="form-field">
+              <label for="cv-projetos">Experiências Práticas, Projetos Acadêmicos ou Extensão *</label>
+              <textarea id="cv-projetos" rows="3" required placeholder="Descreva aqui estágios anteriores, projetos da faculdade, empresa júnior ou iniciação científica..."></textarea>
+            </div>
+
+            <div class="form-field">
+              <label for="cv-habilidades">Habilidades e Ferramentas</label>
+              <input type="text" id="cv-habilidades" placeholder="Ex: HTML, CSS, JavaScript, AutoCAD, Excel Avançado, Figma" />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Salvar e Atualizar Prévia</button>
+              <button type="button" id="btn-imprimir-cv" class="btn btn-secondary">Imprimir / Salvar PDF</button>
+            </div>
+            <p id="cv-feedback" class="feedback-msg" role="status" aria-live="polite"></p>
+          </form>
+
+          <article id="cv-preview" class="card cv-paper" aria-label="Pré-visualização do currículo">
+            <div class="cv-header">
+              <h3 id="prev-nome">Seu Nome Completo</h3>
+              <p id="prev-curso" class="cv-meta">Curso e Período • Turno Livre</p>
+              <p id="prev-contato" class="cv-contact">seu.email@exemplo.com | (00) 00000-0000</p>
+            </div>
+            <div class="cv-body">
+              <h4>Objetivo</h4>
+              <p id="prev-objetivo">Busco oportunidade de estágio alinhada ao meu curso e período acadêmico para aplicar conhecimentos técnicos e contribuir com resultados da equipe.</p>
+
+              <h4>Experiência Prática e Projetos Acadêmicos</h4>
+              <p id="prev-projetos">Ainda não preenchido — descreva suas experiências, trabalhos ou projetos acadêmicos no formulário ao lado.</p>
+
+              <h4>Competências Técnicas e Comportamentais</h4>
+              <p id="prev-habilidades">Ainda não preenchido — adicione suas habilidades ou ferramentas no formulário ao lado.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3: MINHAS CANDIDATURAS -->
+      <section id="sec-candidaturas" class="tab-section hidden" aria-labelledby="titulo-candidaturas">
+        <div class="section-header">
+          <h2 id="titulo-candidaturas">Acompanhamento de Candidaturas</h2>
+          <p>Transparência total em cada etapa para você nunca mais ficar sem retorno.</p>
+        </div>
+
+        <div id="lista-candidaturas" class="candidaturas-list"></div>
+
+        <div id="candidaturas-vazio" class="empty-state">
+          <h3>Você ainda não se candidatou a nenhuma vaga</h3>
+          <p>Explore as vagas compatíveis com seu turno e envie seu perfil com 1 clique.</p>
+          <button type="button" class="btn btn-primary" data-tab="vagas">Ver vagas disponíveis</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal de Detalhes da Vaga -->
+    <dialog id="modal-vaga" class="modal" aria-labelledby="modal-titulo">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="modal-selo" class="tag-iniciante">Aceita 1ºs períodos</span>
+          <button type="button" id="btn-fechar-modal" class="btn-close" aria-label="Fechar detalhes da vaga">×</button>
+        </div>
+        
+        <h2 id="modal-titulo">Título da Vaga</h2>
+        <p id="modal-empresa" class="modal-subtitle">Empresa • Localidade</p>
+
+        <div class="modal-highlights">
+          <div><strong>Horário Exato:</strong> <span id="modal-horario"></span></div>
+          <div><strong>Bolsa + Benefícios:</strong> <span id="modal-bolsa"></span></div>
+          <div><strong>Modalidade:</strong> <span id="modal-modalidade"></span></div>
+          <div><strong>Semestre Mínimo:</strong> <span id="modal-semestre"></span></div>
+        </div>
+
+        <div class="req-grid">
+          <div class="req-box req-obrigatorio">
+            <h3>Requisitos Obrigatórios</h3>
+            <ul id="modal-obrigatorios"></ul>
+          </div>
+          <div class="req-box req-desejavel">
+            <h3>Diferenciais (Não Eliminatórios)</h3>
+            <ul id="modal-desejaveis"></ul>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="btn-candidatar-modal" class="btn btn-primary btn-full">Candidatar-se em 1 Clique</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Navegação Inferior Mobile -->
+    <nav class="bottom-nav" aria-label="Menu inferior mobile">
+      <button type="button" class="bottom-btn active" data-tab="vagas" aria-current="page">
+        <span>Vagas</span>
+      </button>
+      <button type="button" class="bottom-btn" data-tab="curriculo">
+        <span>Currículo</span>
+      </button>
+      <button type="button" class="bottom-btn" data-tab="candidaturas">
+        <span>Status (<span id="mobile-badge-count">0</span>)</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Toast de Notificação -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
